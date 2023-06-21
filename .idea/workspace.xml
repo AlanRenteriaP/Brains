@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e74c08d1-d610-48cd-8b59-53a8d10f8078" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="8d4e0d62-e2f0-4e34-93db-c204ccade523" />
+        <option name="url" value="https://github.com/amida-tech/api-boilerplate.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2ODBs0JJTqejB5g8JTDVDFHPLzF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "editorconfig.notification": "null",
+    "last_opened_file_path": "C:/Users/alanr/WebstormProjects/brains",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "ts.external.directory.path": "C:\\Users\\alanr\\WebstormProjects\\brains\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\alanr\WebstormProjects\brains" />
+      <recent name="C:\Users\alanr\WebstormProjects\brains\src" />
+      <recent name="C:\Users\alanr\WebstormProjects\px_pos\src\redux\navbar" />
+      <recent name="C:\Users\alanr\WebstormProjects\px_pos\src\redux\auth" />
+      <recent name="C:\Users\alanr\WebstormProjects\px_pos\src\redux\common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\alanr\WebstormProjects\px_pos\src\pages\dashboard\pages\inventoryManagement\inventoryForms" />
+      <recent name="C:\Users\alanr\WebstormProjects\brains\.github" />
+      <recent name="C:\Users\alanr\WebstormProjects\brains" />
+      <recent name="C:\Users\alanr\WebstormProjects\px_pos\src\redux\dashboard" />
+      <recent name="C:\Users\alanr\WebstormProjects\px_pos\src\pages\dashboard\pages\dashboardProfile" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e74c08d1-d610-48cd-8b59-53a8d10f8078" name="Changes" comment="" />
+      <created>1681085474383</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681085474383</updated>
+      <workItem from="1681085475869" duration="367000" />
+      <workItem from="1681085856776" duration="15994000" />
+      <workItem from="1681159145816" duration="236000" />
+      <workItem from="1681181443534" duration="7719000" />
+      <workItem from="1681890861921" duration="3674000" />
+      <workItem from="1681896745644" duration="22481000" />
+      <workItem from="1682112833367" duration="5213000" />
+      <workItem from="1682285347466" duration="7336000" />
+      <workItem from="1682326018198" duration="11874000" />
+      <workItem from="1682411199688" duration="4238000" />
+      <workItem from="1682440639403" duration="5289000" />
+      <workItem from="1682544074575" duration="18260000" />
+      <workItem from="1682909133327" duration="3459000" />
+      <workItem from="1682923492761" duration="3247000" />
+      <workItem from="1684440921231" duration="900000" />
+      <workItem from="1684728519444" duration="10708000" />
+      <workItem from="1684800938149" duration="10145000" />
+      <workItem from="1684832096697" duration="31925000" />
+      <workItem from="1685034413860" duration="42615000" />
+      <workItem from="1685326820902" duration="40307000" />
+      <workItem from="1686172953212" duration="29081000" />
+      <workItem from="1686334798097" duration="36373000" />
+      <workItem from="1686821906929" duration="610000" />
+      <workItem from="1687319265540" duration="1023000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
