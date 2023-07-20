@@ -46,14 +46,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "editorconfig.notification": "null",
-    "last_opened_file_path": "C:/Users/alanr/WebstormProjects/brains",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/alanr/WebstormProjects/px_pos",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.fileTypes",
-    "ts.external.directory.path": "C:\\Users\\alanr\\WebstormProjects\\brains\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\alanr\\WebstormProjects\\Brains\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -105,6 +106,7 @@
       <workItem from="1686334798097" duration="36373000" />
       <workItem from="1686821906929" duration="610000" />
       <workItem from="1687319265540" duration="1023000" />
+      <workItem from="1687481296358" duration="106000" />
     </task>
     <servers />
   </component>

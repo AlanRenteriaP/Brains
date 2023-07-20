@@ -6,7 +6,6 @@ dotenv.config();
 
 console.log('Connecting to database...');
 
-
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: 5432,
