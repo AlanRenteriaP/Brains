@@ -58,7 +58,7 @@ router.post('/login', async (req: Request, res: Response) => {
         if (!validPassword) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
-        const token = generateToken(user.rows[0].id, user.rows[0].roles, process.env.JWT_SECRET);
+        const token = generateToken(user.rows[0].id, user.rows[0].roles, 'asdlkjfhaslkd12983470fjlkawelfkjawalanrenterialkejfoiasdfljkhwelkja1029384welkfjjasdflkjwelkejf');
         res.json({ token });
     } catch (error: any) {
         console.error('Error during login:', error.message);
