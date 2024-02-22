@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import pool from '../database';
 import dotenv from 'dotenv';
 import { QueryResult } from 'pg';
@@ -64,6 +64,31 @@ router.post('/login', async (req: Request, res: Response) => {
         console.error('Error during login:', error.message);
         res.status(500).json({ error: 'Server error. Login failed.' });
     }
+});
+
+router.post('/change-password', async (req: Request, res: Response) => {
+    const { token, newpassword } = req.body;
+        const payload = jwt.decode(token) as JwtPayload;
+        console.log(payload);
+        console.log(payload.id);
+
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(newpassword, salt);
+
+    const sameUser: QueryResult = await pool.query(
+        'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING *',
+        [hashedPassword, payload.id]
+    );
+
+    const newtoken = generateToken(sameUser.rows[0].id, [], process.env.JWT_SECRET);
+    res.status(201).json({ newtoken });
+
+});
+
+router.get('/decodetoken', async (req: Request, res: Response) => {
+    const { token } = req.body;
+   const payload = jwt.decode(token);
+    res.status(200).json({ message: payload });
 });
 
 export default router;
