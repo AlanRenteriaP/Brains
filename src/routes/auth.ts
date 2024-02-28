@@ -16,6 +16,11 @@ const generateToken = (id: number, roles: string[], secretKey: Secret | undefine
     return jwt.sign({ id, roles }, null, { algorithm: 'none' });
 };
 
+
+
+
+
+
 router.post('/register', async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
@@ -67,28 +72,52 @@ router.post('/login', async (req: Request, res: Response) => {
 });
 
 router.post('/change-password', async (req: Request, res: Response) => {
-    const { token, newpassword } = req.body;
+    try {
+        const {token, newpassword} = req.body;
         const payload = jwt.decode(token) as JwtPayload;
         console.log(payload);
         console.log(payload.id);
 
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(newpassword, salt);
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(newpassword, salt);
 
-    const sameUser: QueryResult = await pool.query(
-        'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING *',
-        [hashedPassword, payload.id]
-    );
+        const sameUser: QueryResult = await pool.query(
+            'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING *',
+            [hashedPassword, payload.id]
+        );
 
-    const newtoken = generateToken(sameUser.rows[0].id, [], process.env.JWT_SECRET);
-    res.status(201).json({ newtoken });
+        const newtoken = generateToken(sameUser.rows[0].id, [], process.env.JWT_SECRET);
+        console.log(newtoken);
+        res.status(201).json({newtoken});
+    } catch (error: any) {
+        console.error('Error during change:', error.message);
+        res.status(500).json({error: 'Server error. Password change failed.'});
+    }
 
 });
 
-router.get('/decodetoken', async (req: Request, res: Response) => {
-    const { token } = req.body;
-   const payload = jwt.decode(token);
-    res.status(200).json({ message: payload });
-});
+// router.get('/decodetoken', async (req: Request, res: Response) => {
+//     const { token } = req.body;
+//    const payload = jwt.decode(token);
+//     res.status(200).json({ message: payload });
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default router;
