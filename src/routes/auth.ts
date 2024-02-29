@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import pool from '../database';
 import dotenv from 'dotenv';
 import { QueryResult } from 'pg';
@@ -15,6 +15,11 @@ const generateToken = (id: number, roles: string[], secretKey: Secret | undefine
     }
     return jwt.sign({ id, roles }, null, { algorithm: 'none' });
 };
+
+
+
+
+
 
 router.post('/register', async (req: Request, res: Response) => {
     try {
@@ -58,12 +63,61 @@ router.post('/login', async (req: Request, res: Response) => {
         if (!validPassword) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
-        const token = generateToken(user.rows[0].id, user.rows[0].roles, process.env.JWT_SECRET);
+        const token = generateToken(user.rows[0].id, user.rows[0].roles, 'asdlkjfhaslkd12983470fjlkawelfkjawalanrenterialkejfoiasdfljkhwelkja1029384welkfjjasdflkjwelkejf');
         res.json({ token });
     } catch (error: any) {
         console.error('Error during login:', error.message);
         res.status(500).json({ error: 'Server error. Login failed.' });
     }
 });
+
+router.post('/change-password', async (req: Request, res: Response) => {
+    try {
+        const {token, newpassword} = req.body;
+        const payload = jwt.decode(token) as JwtPayload;
+        console.log(payload);
+        console.log(payload.id);
+
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashedPassword = await bcrypt.hash(newpassword, salt);
+
+        const sameUser: QueryResult = await pool.query(
+            'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING *',
+            [hashedPassword, payload.id]
+        );
+
+        const newtoken = generateToken(sameUser.rows[0].id, [], process.env.JWT_SECRET);
+        console.log(newtoken);
+        res.status(201).json({newtoken});
+    } catch (error: any) {
+        console.error('Error during change:', error.message);
+        res.status(500).json({error: 'Server error. Password change failed.'});
+    }
+
+});
+
+// router.get('/decodetoken', async (req: Request, res: Response) => {
+//     const { token } = req.body;
+//    const payload = jwt.decode(token);
+//     res.status(200).json({ message: payload });
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default router;
