@@ -121,7 +121,7 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
         const products: QueryResult = await pool.query(productQuery);
         const variants: QueryResult = await pool.query(variantQuery);
 
-        // Process the product and variant d    ata
+        // Process the product and variant data
         const productsAndVariants = products.rows.map((product: { [key: string]: any }) => {
             // Get all variants for this product
             const productVariants = variants.rows.filter((variant: { [key: string]: any }) => variant.product_id === product.id);
@@ -130,9 +130,10 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
             return {
                 ...product,
                 subRows: productVariants.map((variant: { [key: string]: any }, index: number) => {
-
+                    const sku = (product.id * 1000 + index + 1).toString();
                     return {
                         ...variant,
+                        sku, // Use the generated SKU
                         product_name: product.name,
                         vendor: variant.store, // Transform store to vendor for the front-end
                     };
@@ -148,16 +149,6 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
     }
 });
 
-router.post('/change_valid_variant/:id', async (req: Request, res: Response) => {
-    try {
-        const newId = parseInt(req.params.id);
-        const result = await pool.query('CALL public.change_valid_variant($1)', [newId]);
 
-        res.status(200).json({ message: 'Variant changed successfully' });
-    } catch (error: any) {
-        console.error('Error getting products:', error);
-        res.status(500).json({ error: 'An error occurred while changing the selected variant. Please try again.' });
-    }
-});
 
 export default router;
