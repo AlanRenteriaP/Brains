@@ -130,10 +130,10 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
             return {
                 ...product,
                 subRows: productVariants.map((variant: { [key: string]: any }, index: number) => {
-                    const sku = (product.id * 1000 + index + 1).toString();
+                    // const sku = (product.id * 1000 + index + 1).toString();
                     return {
                         ...variant,
-                        sku, // Use the generated SKU
+                        // sku, // Use the generated SKU
                         product_name: product.name,
                         vendor: variant.store, // Transform store to vendor for the front-end
                     };
