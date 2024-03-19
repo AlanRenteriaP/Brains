@@ -7,11 +7,11 @@ dotenv.config();
 console.log('Connecting to database...');
 
 const pool = new Pool({
-    host: process.env.DB_HOST,
+    host: 'beatrenger.cddfuclqgm0i.us-west-1.rds.amazonaws.com',
     port: 5432,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    database: 'postgres',
+    user: 'postgres',
+    password: 'TomBradyandNickFolesKissing213!',
 });
 
 
