@@ -124,46 +124,47 @@ router.get('/get_product_variants', async (req: Request, res: Response) => {
 
 router.get('/get_products_and_variants', async (req: Request, res: Response) => {
     try {
-        // Modify the productQuery to join with the measurement table
+        // Modify the productQuery to join with the measurement table and order by product ID
         const productQuery = `
             SELECT products.*, measurement.name AS measurement_name
             FROM products
             LEFT JOIN measurement ON products.measurement_id = measurement.id
+            ORDER BY products.id ASC;
         `;
 
-        const variantQuery = 'SELECT * FROM product_variants';
+        // Adjust variantQuery to order by product_variant ID
+        const variantQuery = 'SELECT * FROM product_variants ORDER BY id ASC;';
+
         const products: QueryResult = await pool.query(productQuery);
         const variants: QueryResult = await pool.query(variantQuery);
 
-        // Process the product and variant data
+        // Process the product and variant data with sorting applied by IDs
         const productsAndVariants = products.rows.map((product: { [key: string]: any }) => {
-            // Get all variants for this product
+            // Get all variants for this product, sorted by ID due to the ORDER BY clause in the SQL query
             const productVariants = variants.rows.filter((variant: { [key: string]: any }) => variant.product_id === product.id);
+
+            // No need to sort productVariants here as they are already sorted by ID from the query
 
             // Return the product data with its variants as subRows
             return {
                 ...product,
-
-                subRows: productVariants.map((variant: { [key: string]: any }, index: number) => {
-                    // const sku = (product.id * 1000 + index + 1).toString();
+                subRows: productVariants.map((variant: { [key: string]: any }) => {
                     return {
                         ...variant,
-                        // sku, // Use the generated SKU
-                        product_name: product.name,
-                        vendor: variant.store, // Transform store to vendor for the front-end
+                        product_name: product.product_name, // Ensure this matches your database column name
+                        vendor: variant.vendor, // Assuming 'vendor' is the correct field
                     };
                 }),
             };
         });
 
-        // Send the product data with variants as JSON
+        // Send the sorted product data with variants as JSON
         res.status(200).json(productsAndVariants);
     } catch (error: any) {
         console.error('Error getting products:', error);
         res.status(500).json({ error: 'An error occurred while fetching the products. Please try again.' });
     }
 });
-
 
 router.post('/change_valid_variant/:id', async (req: Request, res: Response) => {
     try {
