@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e74c08d1-d610-48cd-8b59-53a8d10f8078" name="Changes" comment="" />
+    <list default="true" id="e74c08d1-d610-48cd-8b59-53a8d10f8078" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/inv-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/inv-management.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +50,7 @@
     "WebServerToolWindowFactoryState": "false",
     "editorconfig.notification": "null",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/alanr/WebstormProjects/px_pos",
+    "last_opened_file_path": "C:/Users/alanr/WebstormProjects/Brains",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -107,6 +110,7 @@
       <workItem from="1686821906929" duration="610000" />
       <workItem from="1687319265540" duration="1023000" />
       <workItem from="1687481296358" duration="106000" />
+      <workItem from="1692240326643" duration="607000" />
     </task>
     <servers />
   </component>

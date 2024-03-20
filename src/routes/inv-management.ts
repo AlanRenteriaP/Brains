@@ -12,15 +12,19 @@ router.get('/testing', async (req: Request, res: Response) => {
 router.post('/add_product', async (req: Request, res: Response) => {
     try {
         // Validate the request body
-        const { productName } = req.body;
+        const { productName, unitOfMeasurement } = req.body;
         console.log(req.body);
         if (!productName || typeof productName !== 'string') {
             return res.status(400).json({ error: 'Product name is required and must be a string.' });
         }
+        if (!unitOfMeasurement || typeof unitOfMeasurement !== 'number') { // Assuming measurement_id is a number
+            return res.status(400).json({ error: 'Unit of measurement is required and must be a number.' });
+        }
 
         // Add the product to the database
-        const query = 'INSERT INTO products (product_name) VALUES ($1) RETURNING id';
-        const values = [productName];
+        const query = 'INSERT INTO products (product_name, measurement_id) VALUES ($1, $2) RETURNING id';
+
+        const values = [productName, unitOfMeasurement];
         const result: QueryResult = await pool.query(query, values);
 
         // Retrieve the newly inserted product ID
@@ -31,22 +35,27 @@ router.post('/add_product', async (req: Request, res: Response) => {
             data: {
                 product: {
                     id: productId,
-                    name: productName
+                    name: productName,
+                    measurement_id: unitOfMeasurement
                 }
             },
             message: 'Product successfully added.'
         });
     } catch (error: any) {
         console.error('Error adding product:', error);
-        // Consider to not directly expose all the error details to client
+        // Consider not directly exposing all the error details to the client
         res.status(500).json({ error: 'An error occurred while adding the product. Please try again.' });
     }
 });
 
 router.get('/get_products', async (req: Request, res: Response) => {
     try {
-        // Fetch products from the database
-        const query = 'SELECT * FROM products';
+        // Fetch products and their measurement abbreviation from the database
+        const query = `
+            SELECT products.*, measurement.abbreviation 
+            FROM products 
+            JOIN measurement ON products.measurement_id = measurement.id;
+        `;
         const result: QueryResult = await pool.query(query);
 
         // Send the product data as JSON
@@ -115,8 +124,13 @@ router.get('/get_product_variants', async (req: Request, res: Response) => {
 
 router.get('/get_products_and_variants', async (req: Request, res: Response) => {
     try {
-        // Fetch products and their variants from the database
-        const productQuery = 'SELECT * FROM products';
+        // Modify the productQuery to join with the measurement table
+        const productQuery = `
+            SELECT products.*, measurement.name AS measurement_name
+            FROM products
+            LEFT JOIN measurement ON products.measurement_id = measurement.id
+        `;
+
         const variantQuery = 'SELECT * FROM product_variants';
         const products: QueryResult = await pool.query(productQuery);
         const variants: QueryResult = await pool.query(variantQuery);
@@ -129,12 +143,10 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
             // Return the product data with its variants as subRows
             return {
                 ...product,
-                subRows: productVariants.map((variant: { [key: string]: any }, index: number) => {
-                    const sku = (product.id * 1000 + index + 1).toString();
+                subRows: productVariants.map((variant: { [key: string]: any }) => {
                     return {
                         ...variant,
-                        sku, // Use the generated SKU
-                        product_name: product.name,
+                        product_name: product.product_name,  // Adjusted from product.name
                         vendor: variant.store, // Transform store to vendor for the front-end
                     };
                 }),
@@ -148,6 +160,47 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
         res.status(500).json({ error: 'An error occurred while fetching the products. Please try again.' });
     }
 });
+
+router.post('/update_product_area', async (req: Request, res: Response) => {
+    console.log('we made it here');
+    try {
+        const { productId, area, checkboxState } = req.body;
+        if (checkboxState) {
+            // Adding the product to an area
+            const query = 'INSERT INTO inventory (products_id, area) VALUES ($1, $2)';
+            await pool.query(query, [productId, area]);
+            res.status(200).json({ message: "Product added to the area successfully!" });
+        } else {
+            // Removing the product from an area
+            const query = 'DELETE FROM inventory WHERE products_id = $1 AND area = $2';
+            await pool.query(query, [productId, area]);
+            res.status(200).json({ message: "Product removed from the area successfully!" });
+        }
+    } catch (error: any) {
+        console.error('Error updating product area:', error);
+        res.status(500).json({ error: 'An error occurred while updating the product area. Please try again.' });
+    }
+});
+
+router.get('/get_products_by_area', async (req: Request, res: Response) => {
+    try {
+        // Get the area from the request query parameters
+        const area = req.query.area;
+
+        // Query to fetch products with their inventory status for the specific area
+        const productQuery = `SELECT p.*, i.min, i.max, CASE WHEN i.products_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_inventory 
+        FROM products p 
+        LEFT JOIN inventory i ON p.id = i.products_id AND i.area = $1`;
+        const products: QueryResult = await pool.query(productQuery, [area]);
+
+        // Send the product data as JSON
+        res.status(200).json(products.rows);
+    } catch (error: any) {
+        console.error('Error getting products:', error);
+        res.status(500).json({ error: 'An error occurred while fetching the products. Please try again.' });
+    }
+});
+
 
 
 
