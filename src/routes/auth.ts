@@ -17,10 +17,6 @@ const generateToken = (id: number, roles: string[], secretKey: Secret | undefine
 };
 
 
-
-
-
-
 router.post('/register', async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
@@ -101,22 +97,6 @@ router.post('/change-password', async (req: Request, res: Response) => {
 //    const payload = jwt.decode(token);
 //     res.status(200).json({ message: payload });
 // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

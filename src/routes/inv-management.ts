@@ -161,43 +161,16 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
     }
 });
 
-router.post('/update_product_area', async (req: Request, res: Response) => {
-    console.log('we made it here');
+
+router.post('/change_valid_variant/:id', async (req: Request, res: Response) => {
     try {
-        const { productId, area, checkboxState } = req.body;
-        if (checkboxState) {
-            // Adding the product to an area
-            const query = 'INSERT INTO inventory (products_id, area) VALUES ($1, $2)';
-            await pool.query(query, [productId, area]);
-            res.status(200).json({ message: "Product added to the area successfully!" });
-        } else {
-            // Removing the product from an area
-            const query = 'DELETE FROM inventory WHERE products_id = $1 AND area = $2';
-            await pool.query(query, [productId, area]);
-            res.status(200).json({ message: "Product removed from the area successfully!" });
-        }
-    } catch (error: any) {
-        console.error('Error updating product area:', error);
-        res.status(500).json({ error: 'An error occurred while updating the product area. Please try again.' });
-    }
-});
+        const newId = parseInt(req.params.id);
+        const result = await pool.query('CALL public.change_valid_variant($1)', [newId]);
 
-router.get('/get_products_by_area', async (req: Request, res: Response) => {
-    try {
-        // Get the area from the request query parameters
-        const area = req.query.area;
-
-        // Query to fetch products with their inventory status for the specific area
-        const productQuery = `SELECT p.*, i.min, i.max, CASE WHEN i.products_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_inventory 
-        FROM products p 
-        LEFT JOIN inventory i ON p.id = i.products_id AND i.area = $1`;
-        const products: QueryResult = await pool.query(productQuery, [area]);
-
-        // Send the product data as JSON
-        res.status(200).json(products.rows);
+        res.status(200).json({ message: 'Variant changed successfully' });
     } catch (error: any) {
         console.error('Error getting products:', error);
-        res.status(500).json({ error: 'An error occurred while fetching the products. Please try again.' });
+        res.status(500).json({ error: 'An error occurred while changing the selected variant. Please try again.' });
     }
 });
 
