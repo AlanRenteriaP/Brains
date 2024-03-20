@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e74c08d1-d610-48cd-8b59-53a8d10f8078" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/routes/inv-management.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/inv-management.ts" afterDir="false" />
+=======
+>>>>>>> 0068e9cbb003cde65480a8b1e890c895df3f3814
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +35,15 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2ODBs0JJTqejB5g8JTDVDFHPLzF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -110,7 +119,12 @@
       <workItem from="1686821906929" duration="610000" />
       <workItem from="1687319265540" duration="1023000" />
       <workItem from="1687481296358" duration="106000" />
+<<<<<<< HEAD
       <workItem from="1692240326643" duration="607000" />
+=======
+      <workItem from="1709160363121" duration="19000" />
+      <workItem from="1709160553291" duration="104000" />
+>>>>>>> 0068e9cbb003cde65480a8b1e890c895df3f3814
     </task>
     <servers />
   </component>

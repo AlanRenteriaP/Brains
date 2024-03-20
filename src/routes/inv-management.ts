@@ -143,10 +143,13 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
             // Return the product data with its variants as subRows
             return {
                 ...product,
-                subRows: productVariants.map((variant: { [key: string]: any }) => {
+
+                subRows: productVariants.map((variant: { [key: string]: any }, index: number) => {
+                    // const sku = (product.id * 1000 + index + 1).toString();
                     return {
                         ...variant,
-                        product_name: product.product_name,  // Adjusted from product.name
+                        // sku, // Use the generated SKU
+                        product_name: product.name,
                         vendor: variant.store, // Transform store to vendor for the front-end
                     };
                 }),
