@@ -19,7 +19,7 @@ router.get('/menuData', async (req, res) => {
                 r.id AS recipe_id,
                 r.name AS title,
                 r.description,
-                r.price AS sellingPrice,
+                 COALESCE(r.price, 0) AS sellingprice,  
                 r.categories,
                 'https://fakeimg.pl/300x300/?text=Proyecto_Xocolate' AS image,
                 i.products_id,
@@ -35,13 +35,13 @@ router.get('/menuData', async (req, res) => {
                 LEFT JOIN product_variants pv ON pv.product_id = p.id AND pv.is_active = true;
         `;
         const result = await pool.query(recipeWithMaterialsQuery);
-
+        console.log(result.rows[0]);
         const recipes = result.rows.reduce((acc, curr) => {
             const {
                 recipe_id,
                 title,
                 description,
-                sellingPrice,
+                sellingprice,
                 categories,
                 image,
                 products_id,
@@ -55,14 +55,15 @@ router.get('/menuData', async (req, res) => {
                     id: recipe_id,
                     title,
                     description,
-                    sellingPrice,
+                    sellingPrice: sellingprice,
                     categories: categories ? categories.join(', ') : 'No category',
                     image,
                     materials: []
                 };
             }
-            if ( material_name && quantity !== null) {
+            if (products_id && material_name && quantity !== null) {
                 acc[recipe_id].materials.push({
+                    products_id,
                     name: material_name,
                     quantity,
                     measurement,
