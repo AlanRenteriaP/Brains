@@ -12,33 +12,69 @@ router.get('/testing', async (req: Request, res: Response) => {
 function isErrorWithMessage(error: unknown): error is { message: string } {
     return typeof error === 'object' && error !== null && 'message' in error;
 }
-
-
 router.get('/menuData', async (req, res) => {
     try {
-        const recipeQuery = `
+        const recipeWithMaterialsQuery = `
             SELECT
-                r.id,
-                'https://fakeimg.pl/300x300/?text=Proyecto_Xocolate' AS image,
+                r.id AS recipe_id,
                 r.name AS title,
                 r.description,
                 r.price AS sellingPrice,
-                r.categories
+                r.categories,
+                'https://fakeimg.pl/300x300/?text=Proyecto_Xocolate' AS image,
+                i.products_id,
+                p.product_name AS material_name,
+                i.quantity,
+                m.name AS measurement,
+                pv.price AS active_variant_price
             FROM
-                recipes r;
+                recipes r
+                LEFT JOIN ingredients i ON r.id = i.recipes_id
+                LEFT JOIN products p ON i.products_id = p.id
+                LEFT JOIN measurement m ON p.measurement_id = m.id
+                LEFT JOIN product_variants pv ON pv.product_id = p.id AND pv.is_active = true;
         `;
-        const recipesResult = await pool.query(recipeQuery);
-        const recipesWithCategories = recipesResult.rows.map(recipe => {
-            // Adjust based on the actual data type of `categories`
-            const categories = Array.isArray(recipe.categories) ? recipe.categories.join(', ') : recipe.categories;
-            return {
-                ...recipe,
-                category: categories // Directly use or adjust based on your needs
-            };
-        });
+        const result = await pool.query(recipeWithMaterialsQuery);
 
-        res.status(200).json(recipesWithCategories);
-    }  catch (error: unknown) {
+        const recipes = result.rows.reduce((acc, curr) => {
+            const {
+                recipe_id,
+                title,
+                description,
+                sellingPrice,
+                categories,
+                image,
+                products_id,
+                material_name,
+                quantity,
+                measurement,
+                active_variant_price
+            } = curr;
+            if (!acc[recipe_id]) {
+                acc[recipe_id] = {
+                    id: recipe_id,
+                    title,
+                    description,
+                    sellingPrice,
+                    categories: categories ? categories.join(', ') : 'No category',
+                    image,
+                    materials: []
+                };
+            }
+            if ( material_name && quantity !== null) {
+                acc[recipe_id].materials.push({
+                    name: material_name,
+                    quantity,
+                    measurement,
+                    cost: active_variant_price // Assuming 'cost' represents the price of the active variant
+                });
+            }
+            return acc;
+        }, {});
+
+        const recipesArray = Object.values(recipes);
+        res.status(200).json(recipesArray);
+    } catch (error: unknown) {
         if (isErrorWithMessage(error)) {
             console.error('Error getting menu data:', error.message);
             res.status(500).json({ error: 'An error occurred while fetching the menu data. Please try again.', details: error.message });
