@@ -1,4 +1,4 @@
-// src/routes/index.ts
+// src/routes/index.tsx
 import express from 'express';
 import authRoutes from './auth';
 import invManagementRoutes from './inv-management';

@@ -1,4 +1,4 @@
-// src/database/index.ts
+// src/database/index.tsx
 import { Pool } from 'pg';
 
 import dotenv from 'dotenv';

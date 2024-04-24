@@ -152,7 +152,7 @@ router.get('/get_products_and_variants', async (req: Request, res: Response) => 
 router.post('/change_valid_variant/:id', async (req: Request, res: Response) => {
     try {
         const newId = parseInt(req.params.id);
-        const result = await pool.query('CALL public.change_valid_variant($1)', [newId]);
+        const result = await pool.query('CALL dist.change_valid_variant($1)', [newId]);
 
         res.status(200).json({ message: 'Variant changed successfully' });
     } catch (error: any) {
